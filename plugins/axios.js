@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default defineNuxtPlugin(NuxtApp)=>{
+export default defineNuxtPlugin((NuxtApp)=>{
     axios.defaults.baseURL= 'http://localhost:8000';
     axios.defaults.withCredentials= true;
     
@@ -10,4 +10,4 @@ export default defineNuxtPlugin(NuxtApp)=>{
         }
     }
 
-}
+})
