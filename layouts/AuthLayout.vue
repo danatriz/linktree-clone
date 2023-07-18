@@ -23,7 +23,7 @@
             <img
                 v-else="route.fullPath === '/'"
                 class="object-cover w-full h-screen select-none"
-                src="~/assets/images/side1.png"
+                src="~/assets/images/side2.png"
              >
         </div>
     </div>
