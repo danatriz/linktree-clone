@@ -84,6 +84,62 @@
 
             </div>
         </div>
+        <div
+            v-if="!userStore.isMobile"
+            id="SecondaryTopNave"
+            class="w-full md:hidden flex items-center justify-between md:pt-2.5 md:px-2.5"
+        >
+            <div class="flex items-center justify-between gap-4 shadow-sm bg-white w-full">
+                <div class="flex w-full">
+                    <div v-for="link in linksSecondaryNav" class="w-1/4">
+                        <NuxtLink
+                            :to="link.url"
+                            class="
+                                relative
+                                flex
+                                justify-center
+                                border-t-black
+                                text-sm
+                                w-full
+                                h-full
+                                font-semibold
+                                px-1.5
+                                my-[1px]
+                                py-[1px]
+                                hover:bg-gray-100
+                            "
+                            :class="link.url == route.fullPath ? 'border-b-2 border-b-black': ''"
+                        >
+                            <button class="relative pt-[6px]">
+                                <Icon 
+                                    v-if="link.icon"
+                                    :name="link.icon"
+                                    size="20"
+                                    :color="route.fullPath == link.url ? '#000000' : '#67685F'"
+                                />
+                                <img
+                                    v-else
+                                    class="rounded-full min-w-[22px] w-[22px]"
+                                    :src="link.img"
+                                >
+                                <div 
+                                class="relative text-[13px] text-[#674B5F]"
+                                :class="link.img ? '-left-[5px]' :''"
+                                >
+
+                                    <span :class="route.fullPath == link.url ? ' text-[#000000]' : 'text-[#676B5F]' ">
+                                        {{ link.name }}
+                                    </span>
+
+                                </div>
+
+                            </button>
+
+                        </NuxtLink>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -110,6 +166,15 @@ const links = ref([
     { name: 'Analytics', url: '/', icon: 'tabler:brand-google-analytics' },
     { name: 'Settings', url: '/', icon: 'material-symbols:settings' },
 ])
+
+
+const linksSecondaryNav = ref([
+    { name: 'Links', url: '/admin', icon: 'icon-park-outline:hamburger-button' },
+    { name: 'Apperance', url: '/admin/apperance', icon: 'fluent:shapes-48-regular' },
+    { name: 'Analytics', url: '/', icon: 'tabler:brand-google-analytics' },
+    { name: 'Settings', url: '/admin/more', icon: '', img:"https://picsum.photos/id/8/300/320" },
+])
+
 
 const openMenu = (str) => {
     if (str === 'TopNav') {
