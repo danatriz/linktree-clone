@@ -58,6 +58,31 @@
                     </button>
                 </div>
             </div>
+            <div
+                v-if="isTopNav"
+                class="
+                    absolute 
+                    md:block
+                    hidden
+                    right-4 
+                    top-16 
+                    border 
+                    shadow-[0_5px_15px_15px_rgba(0,0,0,0.1)] 
+                    bg-white 
+                    w-full 
+                    max-w-[300px] 
+                    rounded-2xl
+                "
+            >
+                <button
+                    @click="$event => logout()"
+                    class="w-full flex items-center text-gray-600 text-[15px] p-3 hover:text-block"
+                >
+                    <Icon name="circum:logout" class="mr-6" />
+                        Sign Out
+                </button>
+
+            </div>
         </div>
     </div>
 </template>
@@ -67,10 +92,17 @@ import { useUserStore } from '~/stores/user';
 const userStore = useUserStore()
 
 const route = useRoute()
+const router = useRouter()
 
 let isTopNav = ref(false)
-let windowWidth = ref(window.innerWidth)
+let windowWidth = ref(process.client ? window.innerWidth : '')
 let isSecondaryTopNav = ref(false)
+
+onMounted(() => {
+    window.addEventListener('resize', function() {
+        windowWidth.value = window.innerWidth;
+    })
+})
 
 const links = ref([
     { name: 'Links', url: '/admin', icon: 'icon-park-outline:hamburger-button' },
@@ -80,7 +112,7 @@ const links = ref([
 ])
 
 const openMenu = (str) => {
-    if (str === 'Topnav') {
+    if (str === 'TopNav') {
         isTopNav.value = true
     } else if (str === 'SecondaryTopNav'){
         isSecondaryTopNav.value = true
@@ -89,4 +121,11 @@ const openMenu = (str) => {
     }
 }
 
+const logout = async() => {
+watch(() => windowWidth.value, () => {
+    if(windowWidth.value <= 767){
+        isTopNav.value= false
+    }
+})
+}
 </script>
