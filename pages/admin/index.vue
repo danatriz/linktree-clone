@@ -4,7 +4,7 @@
             id="AdminPage"
             class="flex h-[100vh] pb-4"
         >
-            Admin Page
+            
         </div>
     </AdminLayout>
 </template>

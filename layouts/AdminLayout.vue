@@ -140,6 +140,96 @@
                 </div>
             </div>
         </div>
+        <div 
+            v-if="!userStore.isMobile"
+            id="PreviewButton"
+            class="fixed bottom-10 w-full flex items-center justify-center"
+        >
+            <button
+                @click="$event => userStore.isPreviewOverlay = true"
+                class="md:hidden flex items-center text-[17px] font-semibold px-5 py-2.5 bg-[#DFE2D9] rounded-full"
+
+            >
+               <Icon name="icon-park-outline:preview-open" size="20" class="mr-2"/>
+               Preview
+            </button>
+        </div>
+        <div
+            v-if="userStore.isMobile"
+            id="TopNavMobile"
+            class="fixed w-full flex items-center justify-between px-2.5 bg-[#F3F3F1]"
+        >
+            <div class="flex items-center justify-between w-full text-3xl font-bold max-2[500px]">
+                {{ currentMobilePage() }}
+            </div>
+
+            <div class="flex items-center justify-between gap-3">
+                <button class="flex items-center text-[18px] font-semibold px-3 py-2 rounded-full bg-gray-200">
+                    <Icon name="mdi:lightning-bolt" class="ml-1" size="20"/>
+                </button>
+
+                <button class="flex items-center font-semibold px-3 py-2 rounded-full bg-gray-200">
+                    <Icon name="ph:share-network" class="mr-0.5" size="20"/>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-2.5 w-full z-0">
+        <slot />
+    </div>
+
+    <div 
+        v-if="!userStore.isMobile"
+        id="BottomNav"
+        class="fixed z-20 bottom-0 flex w-full bg-white shadow-[0_34px_60px_10px_rgba0,0,0,0.4)]"
+        :class="userStore.isMobile ? 'h-[70px]' : 'h-[60px]'" 
+    >
+
+    <div class="flex w-full">
+        <div v-for="link in linksMobile" class="w-1/5">
+            <button
+                class="
+                    relative
+                    flex
+                    justify-center
+                    text-sm
+                    w-full
+                    h-full
+                    font-semibold
+                    px-1.5
+                    py-1
+                    hover:bg-gray-100
+                "
+                :class="link.url == route.fullPath ? 'border-t-2 border-t-black' : ''"
+            >
+                <NuxtLink :to="link.url" class="relative h-[35px]">
+                    <Icon 
+                        v-if="link.icon"
+                        :name="link.icon"
+                        class="mr-0.5 mt-[2px]"
+                        size="25"
+                        :color="route.fullPath == link.url ? '#000000' : '#67685F'"
+                    />
+                    <img
+                        v-else
+                        class="rounded-full min-2-[25px] w-[25px] mt-[2px]"
+                        :src="link.img"
+                    >
+                    <div 
+                        class="relative text-[13px]"
+                        :class="link.img ? '-left-[4px]':''"
+                    >
+                        <span :class="route.fullPath == link.url ? 'text-[#000000]' : 'text-[#676B5F]'">
+                            {{ link.name }}
+                        </span>
+                    </div>
+                </NuxtLink>
+
+            </button>
+        </div>
+    </div>
+
     </div>
 </template>
 
@@ -175,6 +265,31 @@ const linksSecondaryNav = ref([
     { name: 'Settings', url: '/admin/more', icon: '', img:"https://picsum.photos/id/8/300/320" },
 ])
 
+const linksMobile = ref([
+    { name: 'Links', url: '/admin', icon: 'icon-park-outline:hamburger-button', img: '' },
+    { name: 'Apperance', url: '/admin/apperance', icon: 'fluent:shapes-48-regular', img: '' },
+    { name: 'Preview', url: '/admin/preview', icon: 'icon-park-outline:preview-open', img: '' },
+    { name: 'Analytics', url: '/', icon: 'tabler:brand-google-analytics', img: '' },
+    { name: 'More', url: '/admin/more', icon: '', img:"https://picsum.photos/id/8/300/320" }
+])
+
+const currentMobilePage = () => {
+    switch(route.fullPath){
+        case '/admin':
+            return 'Links'
+            break;
+        case '/admin/apperance':
+            return 'Apperance'
+            break;
+        case '/admin/preview':
+            return 'Preview'
+            break;
+        case '/admin/more':
+            return 'More'
+            break;
+    }
+}
+
 
 const openMenu = (str) => {
     if (str === 'TopNav') {
@@ -186,11 +301,16 @@ const openMenu = (str) => {
     }
 }
 
-const logout = async() => {
+const logout = async() => {}
+
 watch(() => windowWidth.value, () => {
     if(windowWidth.value <= 767){
         isTopNav.value= false
     }
 })
-}
+
+
+/*
+59:05
+*/ 
 </script>
