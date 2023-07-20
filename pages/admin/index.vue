@@ -18,7 +18,7 @@
                             class="mr-0.5"
                             size="25"
                         />
-                        <span v-if="!userStore.isMobile">Add Link</span>
+                        <span v-if="!userStore.isMobile"></span>
                         <span v-if="!userStore.isMobile">Add new link</span>
                     </button>
                     <AddLink 
@@ -29,7 +29,6 @@
                             {'max-h-0 transition-all duration-300 ease-out': !showAddLink},
                         ]"
                     />
-
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <VitePwaManifest />
+    <div v-if="bgIsGray" class="bg-[#F3F3F1] fixed w-full h-full z-[-1]" />
     <NuxtPage />
   </div>
 </template>
@@ -22,6 +23,8 @@ onMounted(() =>{
   isPreviewOverlay.value = false
   isMobile.value = false
 
+  checkPath(route.fullPath)
+
   if('ontouchstart' in window){
     isMobile.value = true
   }
@@ -39,6 +42,15 @@ const colors = () => {
         { id: 8, color: 'bg-gradient-to-t from-gray-800 to-emerald-500', text: 'text-white', name: 'Tinted Lake' },
     ]
 }
+
+const checkPath = (path) => {
+  if (path == '/' || path == '/register'){
+    bgIsGray.value = false
+    return
+  }
+  bgIsGray.value= true
+}
+  
   
 </script>
 
