@@ -280,7 +280,59 @@ const editLink = (selectedId, selectedStr) => {
     return false
 }
 
+const editImage = () =>{
+    if (userStore.isMobile){
+        userStore.updatedLink = link.value.id
+    } else {
+        isUploadImage.value= true;
+        isDelete.value=false;
+    }
+}
+
+const updateLinkImage = async () =>{
+    //
+}
+
+const deleteLink = async() => {
+    let res = confirm('Are you sure you want to delete this Link?')
+}
+
+watch(()=> name.value, () => {
+    if(name.value && name.value !== link.value.name){
+        updateLink()
+    }
+})
+
+
+watch(()=> url.value, () => {
+    if(url.value && url.value !== link.value.url){
+        updateLink()
+    }
+})
+
+watch(() => selectedId.value, () => {
+    if(selectedId.value){
+        changeInput('isName', 'editNameInput')
+        changeInput('isLink', 'editLinkInput')
+    }
+})
+
+watch(() => selectedStr.value, () => {
+    if(selectedStr.value){
+        changeInput('isName', 'editNameInput')
+        changeInput('isLink', 'editLinkInput')
+    }
+})
+
+watch(() => updatedLinkId.value, ()=>{
+    if(!val){
+        emit('updatedInput', {id:0, str:''})
+    }
+})
+
+watch(() => data.value, async() => await updateLinkImage())
 
 </script>
 
+1:32:23
 
