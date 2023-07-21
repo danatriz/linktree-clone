@@ -61,7 +61,7 @@ const emit = defineEmits(['close'])
 
 let name=ref('')
 let url =ref('')
-let error=ref(null)
+let errors=ref(null)
 
 const addLink = async () => {}
 
